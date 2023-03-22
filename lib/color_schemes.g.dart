@@ -2,15 +2,20 @@ import 'package:flutter/material.dart';
 
 ThemeData myTheme({required ColorScheme type}) {
   return ThemeData(
-      useMaterial3: true,
-      colorScheme: type,
-      fontFamily: 'Poppins',
-      iconTheme: const IconThemeData(color: Colors.pink),
-      appBarTheme: const AppBarTheme(
-          titleTextStyle: TextStyle(
-              fontWeight: FontWeight.w700,
-              fontSize: 25,
-              color: Colors.black38)));
+    useMaterial3: true,
+    colorScheme: type,
+    fontFamily: 'Poppins',
+    iconTheme: const IconThemeData(color: Colors.pink),
+    appBarTheme: AppBarTheme(
+      titleTextStyle: TextStyle(
+        fontWeight: FontWeight.w700,
+        fontSize: 25,
+        color: type == darkColorScheme
+            ? const Color(0xffa5cc33)
+            : const Color(0xFF093110),
+      ),
+    ),
+  );
 }
 
 const lightColorScheme = ColorScheme(
@@ -33,7 +38,7 @@ const lightColorScheme = ColorScheme(
   onErrorContainer: Color(0xFF410002),
   background: Color(0xFFF7FFEE),
   onBackground: Color(0xFF002200),
-  surface: Color(0xFFEEFDD5),
+  surface: Color(0xffa5cc33),
   onSurface: Color(0xFF002200),
   surfaceVariant: Color(0xFFDDE5D9),
   onSurfaceVariant: Color(0xFF414941),

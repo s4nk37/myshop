@@ -50,8 +50,8 @@ class ProductsOverviewScreen extends StatelessWidget {
         body: GridView.builder(
           padding: const EdgeInsets.all(8),
           itemCount: loadedProducts.length,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: MediaQuery.of(context).size.width > 450 ? 3 : 2,
             crossAxisSpacing: 10,
             childAspectRatio: 3 / 2,
             mainAxisSpacing: 10,
