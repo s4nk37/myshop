@@ -1,19 +1,20 @@
 import 'dart:ui';
-
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import '../screens/product_detail_screen.dart';
+import '../providers/product.dart';
 
 class ProductItem extends StatelessWidget {
-  final String id;
-  final String title;
-  final String imageUrl;
+  // final String id;
+  // final String title;
+  // final String imageUrl;
 
-  const ProductItem(
-      {Key? key, required this.id, required this.title, required this.imageUrl})
-      : super(key: key);
+  const ProductItem({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final product = Provider.of<Product>(context);
+
     return Container(
       decoration: BoxDecoration(
           border: Border.all(color: Colors.black12, width: 5),
@@ -33,7 +34,7 @@ class ProductItem extends StatelessWidget {
                       color: Colors.redAccent,
                     )),
                 title: Text(
-                  title,
+                  product.title,
                   textAlign: TextAlign.center,
                 ),
                 trailing: IconButton(
@@ -47,11 +48,11 @@ class ProductItem extends StatelessWidget {
           ),
           child: InkWell(
             onTap: () {
-              Navigator.of(context)
-                  .pushNamed(ProductDetailScreen.routeName, arguments: {id});
+              Navigator.of(context).pushNamed(ProductDetailScreen.routeName,
+                  arguments: product.id);
             },
             child: Image.network(
-              imageUrl,
+              product.imageUrl,
               fit: BoxFit.cover,
             ),
           ),

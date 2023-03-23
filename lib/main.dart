@@ -13,16 +13,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'My Shop',
-      debugShowCheckedModeBanner: false,
-      theme: myTheme(type: lightColorScheme),
-      darkTheme: myTheme(type: darkColorScheme),
-      // home: ProductsOverviewScreen(),
-      routes: {
-        '/': (ctx) => ProductsOverviewScreen(),
-        ProductDetailScreen.routeName: (ctx) => const ProductDetailScreen(),
-      },
+    return ChangeNotifierProvider(
+      create: (_) => Products(),
+      child: MaterialApp(
+        title: 'My Shop',
+        debugShowCheckedModeBanner: false,
+        theme: myTheme(type: lightColorScheme),
+        darkTheme: myTheme(type: darkColorScheme),
+        // home: ProductsOverviewScreen(),
+        routes: {
+          '/': (ctx) => ProductsOverviewScreen(),
+          ProductDetailScreen.routeName: (ctx) => const ProductDetailScreen(),
+        },
+      ),
     );
   }
 }
