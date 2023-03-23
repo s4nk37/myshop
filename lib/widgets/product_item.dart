@@ -13,7 +13,7 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final product = Provider.of<Product>(context);
+    final product = Provider.of<Product>(context, listen: false);
 
     return Container(
       decoration: BoxDecoration(
@@ -27,18 +27,26 @@ class ProductItem extends StatelessWidget {
               filter: ImageFilter.blur(sigmaX: 7, sigmaY: 7),
               child: GridTileBar(
                 backgroundColor: Colors.black26,
-                leading: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.favorite,
-                      color: Colors.redAccent,
-                    )),
+                leading: Consumer<Product>(
+                  builder: (ctx, product, _) => IconButton(
+                      onPressed: () {
+                        product.toggleFavoriteStatus();
+                      },
+                      splashColor: Colors.transparent,
+                      icon: Icon(
+                        product.isFavorite
+                            ? Icons.favorite
+                            : Icons.favorite_border,
+                        color: Colors.redAccent,
+                      )),
+                ),
                 title: Text(
                   product.title,
                   textAlign: TextAlign.center,
                 ),
                 trailing: IconButton(
                     onPressed: () {},
+                    splashColor: Colors.transparent,
                     icon: const Icon(
                       Icons.shopping_bag,
                       color: Colors.white,

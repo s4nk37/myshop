@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         darkTheme: myTheme(type: darkColorScheme),
         // home: ProductsOverviewScreen(),
         routes: {
-          '/': (ctx) => ProductsOverviewScreen(),
+          '/': (ctx) => const ProductsOverviewScreen(),
           ProductDetailScreen.routeName: (ctx) => const ProductDetailScreen(),
         },
       ),
