@@ -33,11 +33,6 @@ class Cart with ChangeNotifier {
     return total;
   }
 
-  void removeItem(String id) {
-    _items.removeWhere((key, value) => value.id == id);
-    notifyListeners();
-  }
-
   void addItem(String productId, double price, String title) {
     if (_items.containsKey(productId)) {
       _items.update(
@@ -57,6 +52,11 @@ class Cart with ChangeNotifier {
               price: price));
     }
 
+    notifyListeners();
+  }
+
+  void removeItem(String productId) {
+    _items.remove(productId);
     notifyListeners();
   }
 }
