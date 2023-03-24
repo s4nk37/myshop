@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myshop/screens/cart_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/cart.dart';
@@ -26,6 +27,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
     return Scaffold(
         appBar: AppBar(
           title: const Text("My Shop"),
+          centerTitle: true,
           actions: [
             PopupMenuButton(
               onSelected: (FilterOptions selectedValue) {
@@ -65,7 +67,10 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
               ),
               child: IconButton(
                   icon: const Icon(Icons.shopping_bag_rounded),
-                  onPressed: () {}),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => const CartScreen()));
+                  }),
             )
           ],
         ),
