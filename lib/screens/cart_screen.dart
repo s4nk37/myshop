@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../widgets/cart_item.dart';
 import '../providers/cart.dart' show Cart;
+import '../providers/orders.dart';
 
 class CartScreen extends StatelessWidget {
   static const routeName = 'cart';
@@ -55,7 +56,11 @@ class CartScreen extends StatelessWidget {
               width: double.infinity,
               height: 60,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Provider.of<Orders>(context, listen: false).addOrder(
+                      cartData.items.values.toList(), cartData.totalAmount);
+                  cartData.clear();
+                },
                 style: ButtonStyle(
                   shape: MaterialStateProperty.all(BeveledRectangleBorder(
                       borderRadius: BorderRadius.circular(5))),
