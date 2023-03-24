@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../providers/orders.dart' as provider_order;
 import 'package:intl/intl.dart';
+import 'dart:math';
 
 class OrderItem extends StatefulWidget {
   final provider_order.OrderItem order;
@@ -27,7 +28,7 @@ class _OrderItemState extends State<OrderItem> {
             subtitle:
                 Text(DateFormat.yMMMd().add_jm().format(widget.order.dateTime)),
             trailing: IconButton(
-              icon: const Icon(Icons.expand_more),
+              icon: Icon(_showMore ? Icons.expand_less : Icons.expand_more),
               onPressed: () {
                 setState(() {
                   _showMore = !_showMore;
@@ -35,22 +36,25 @@ class _OrderItemState extends State<OrderItem> {
               },
             ),
           ),
-          _showMore
-              ? Container(
-                  height: 100,
+
+          if (_showMore)
+            Container(
+              height: min(widget.order.products.length * 50.0, 180),
+              decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.surfaceVariant,
-                  child: ListView.builder(
-                      itemCount: widget.order.products.length,
-                      itemBuilder: (ctx, i) {
-                        return ListTile(
-                          leading: Text(widget.order.products[i].title),
-                          title:
-                              Text('× ${widget.order.products[i].quantity}  '),
-                          trailing: Text('₹ ${widget.order.products[i].price}'),
-                        );
-                      }),
-                )
-              : Container(),
+                  borderRadius:
+                      const BorderRadius.vertical(bottom: Radius.circular(12))),
+              child: ListView.builder(
+                  itemCount: widget.order.products.length,
+                  itemBuilder: (ctx, i) {
+                    return ListTile(
+                      leading: Text(widget.order.products[i].title),
+                      title: Text('× ${widget.order.products[i].quantity}  '),
+                      trailing: Text('₹ ${widget.order.products[i].price}'),
+                    );
+                  }),
+            ),
+          // : Container(),
         ],
       ),
     );

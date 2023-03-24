@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../screens/order_confirmation_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../widgets/cart_item.dart';
@@ -60,6 +61,8 @@ class CartScreen extends StatelessWidget {
                   Provider.of<Orders>(context, listen: false).addOrder(
                       cartData.items.values.toList(), cartData.totalAmount);
                   cartData.clear();
+                  Navigator.of(context)
+                      .pushNamed(OrderConfirmationScreen.routeName);
                 },
                 style: ButtonStyle(
                   shape: MaterialStateProperty.all(BeveledRectangleBorder(
