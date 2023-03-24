@@ -38,8 +38,10 @@ class CartItem extends StatelessWidget {
           size: 30,
         ),
       ),
-      child: Card(
-        elevation: 0.0,
+      child: Container(
+        decoration: const BoxDecoration(
+          border: Border(bottom: BorderSide(width: 0.1)),
+        ),
         margin: const EdgeInsets.symmetric(horizontal: 10),
         child: ListTile(
           tileColor: Theme.of(context).colorScheme.primaryContainer,
