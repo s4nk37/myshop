@@ -54,7 +54,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
       if (productId.isNotEmpty) {
         _editedProduct =
             Provider.of<Products>(context, listen: false).findbyId(productId);
-        print(_editedProduct);
+
         _initValues = {
           'title': _editedProduct.title,
           'description': _editedProduct.description,
@@ -64,7 +64,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
         _imageUrlController.text = _editedProduct.imageUrl.toString();
       }
     }
-    print(_isInit);
+
     _isInit = false;
 
     super.didChangeDependencies();
@@ -131,7 +131,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
             children: [
               //TITLE
               TextFormField(
-                initialValue: _initValues['title'].toString(),
+                initialValue: _initValues['title'],
                 decoration: const InputDecoration(labelText: 'Title'),
                 textInputAction: TextInputAction.next,
                 onFieldSubmitted: (_) {
@@ -158,7 +158,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
 
               //PRICE
               TextFormField(
-                initialValue: _initValues['price'].toString(),
+                initialValue: _initValues['price'],
                 decoration: const InputDecoration(labelText: 'Price'),
                 textInputAction: TextInputAction.next,
                 keyboardType: TextInputType.number,
@@ -192,7 +192,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
 
               //DESCRIPTION
               TextFormField(
-                initialValue: _initValues['description'].toString(),
+                initialValue: _initValues['description'],
                 decoration: const InputDecoration(labelText: 'Description'),
                 maxLines: 3,
                 keyboardType: TextInputType.multiline,
