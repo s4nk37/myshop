@@ -23,7 +23,7 @@ class UserProductsScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).pushNamed(EditProductScreen.routeName);
               },
-              icon: Icon(Icons.add))
+              icon: const Icon(Icons.add))
         ],
       ),
       drawer: const AppDrawer(),
@@ -32,6 +32,7 @@ class UserProductsScreen extends StatelessWidget {
           itemCount: products.items.length,
           itemBuilder: (ctx, i) {
             return UserProductItem(
+              id: products.items[i].id,
               title: products.items[i].title,
               imageUrl: products.items[i].imageUrl,
             );
