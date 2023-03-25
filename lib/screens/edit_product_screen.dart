@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../providers/product.dart';
 
 class EditProductScreen extends StatefulWidget {
   static const routeName = "/editproductsscreen";
@@ -14,6 +15,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
   final _descriptionFocusNode = FocusNode();
   final _imageUrlController = TextEditingController();
   final _imageUrlFocusNode = FocusNode();
+  final _form = GlobalKey<FormState>();
+  var _editedProduct =
+      Product(id: '', title: '', description: '', price: 0, imageUrl: '');
 
   @override
   void initState() {
@@ -33,8 +37,23 @@ class _EditProductScreenState extends State<EditProductScreen> {
 
   void _updateImageUrl() {
     if (!_imageUrlFocusNode.hasFocus) {
+      if ((!(_imageUrlController.text.startsWith('http')) &&
+              !(_imageUrlController.text.startsWith('https'))) ||
+          !(_imageUrlController.text.endsWith('.jpg')) &&
+              !(_imageUrlController.text.endsWith('.jpeg')) &&
+              !(_imageUrlController.text.endsWith('.png'))) {
+        return;
+      }
       setState(() {});
     }
+  }
+
+  void _saveForm() {
+    final isValid = _form.currentState?.validate();
+    if (isValid!) {
+      return;
+    }
+    _form.currentState?.save();
   }
 
   @override
@@ -42,19 +61,42 @@ class _EditProductScreenState extends State<EditProductScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Edit Product"),
+        actions: [
+          IconButton(onPressed: _saveForm, icon: const Icon(Icons.save))
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: Form(
+          key: _form,
+          autovalidateMode: AutovalidateMode.disabled,
           child: ListView(
             children: [
+              //TITLE
               TextFormField(
                 decoration: const InputDecoration(labelText: 'Title'),
                 textInputAction: TextInputAction.next,
                 onFieldSubmitted: (_) {
                   FocusScope.of(context).requestFocus(_priceFocusNode);
                 },
+                onSaved: (value) {
+                  _editedProduct = Product(
+                      id: '',
+                      title: value!,
+                      description: _editedProduct.description,
+                      price: _editedProduct.price,
+                      imageUrl: _editedProduct.imageUrl);
+                },
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Please enter a title";
+                  }
+
+                  return null;
+                },
               ),
+
+              //PRICE
               TextFormField(
                 decoration: const InputDecoration(labelText: 'Price'),
                 textInputAction: TextInputAction.next,
@@ -63,13 +105,54 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 onFieldSubmitted: (_) {
                   FocusScope.of(context).requestFocus(_descriptionFocusNode);
                 },
+                onSaved: (value) {
+                  _editedProduct = Product(
+                      id: '',
+                      title: _editedProduct.title,
+                      description: _editedProduct.description,
+                      price: double.parse(value!),
+                      imageUrl: _editedProduct.imageUrl);
+                },
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Please enter something";
+                  }
+                  if (double.tryParse(value) == null) {
+                    return "Please enter valid number";
+                  }
+                  if (double.parse(value) <= 0) {
+                    return "Please enter a positive number";
+                  }
+                  return null;
+                },
               ),
+
+              //DESCRIPTION
               TextFormField(
                 decoration: const InputDecoration(labelText: 'Description'),
                 maxLines: 3,
                 keyboardType: TextInputType.multiline,
                 focusNode: _descriptionFocusNode,
+                onSaved: (value) {
+                  _editedProduct = Product(
+                      id: '',
+                      title: _editedProduct.title,
+                      description: value!,
+                      price: _editedProduct.price,
+                      imageUrl: _editedProduct.imageUrl);
+                },
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Please enter a description";
+                  }
+                  if (value.length < 10) {
+                    return "Should be at least 10 characters long";
+                  }
+                  return null;
+                },
               ),
+
+              //IMAGE URL
               Container(
                 margin: const EdgeInsets.only(top: 20),
                 child: Row(
@@ -83,6 +166,30 @@ class _EditProductScreenState extends State<EditProductScreen> {
                         textInputAction: TextInputAction.done,
                         controller: _imageUrlController,
                         focusNode: _imageUrlFocusNode,
+                        onSaved: (value) {
+                          _editedProduct = Product(
+                              id: '',
+                              title: _editedProduct.title,
+                              description: _editedProduct.description,
+                              price: _editedProduct.price,
+                              imageUrl: value!);
+                        },
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Please enter a URL";
+                          }
+                          if (!(value.startsWith('http')) &&
+                              !(value.startsWith('https'))) {
+                            return "Please enter a valid URL";
+                          }
+                          if (!(value.endsWith('.jpg')) &&
+                              !(value.endsWith('.jpeg')) &&
+                              !(value.endsWith('.png'))) {
+                            return "Please enter a valid image URL";
+                          }
+                          return null;
+                        },
+                        onFieldSubmitted: (_) => _saveForm(),
                       ),
                     ),
                     Container(
