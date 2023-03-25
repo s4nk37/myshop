@@ -66,20 +66,26 @@ class CartItem extends StatelessWidget {
               );
             });
       },
-      child: Container(
-        decoration: const BoxDecoration(
-          border: Border(bottom: BorderSide(width: 0.1)),
-        ),
-        margin: const EdgeInsets.symmetric(horizontal: 10),
-        child: ListTile(
-          tileColor: Theme.of(context).colorScheme.primaryContainer,
-          title: Text(title),
-          leading: Text('$quantity x '),
-          trailing: Chip(
-            label: Text('₹ $price'),
-            backgroundColor: Colors.lime.withOpacity(0.1),
-            side: BorderSide.none,
-          ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+        child: Column(
+          children: [
+            ListTile(
+              tileColor: Theme.of(context).colorScheme.primaryContainer,
+              title: Text(title),
+              leading: Text('$quantity x '),
+              trailing: Chip(
+                label: Text('₹ $price'),
+                backgroundColor: Colors.lime.withOpacity(0.1),
+                side: BorderSide.none,
+              ),
+            ),
+            const Divider(
+              height: 0.0,
+              thickness: 0.4,
+              color: Colors.black12,
+            ),
+          ],
         ),
       ),
     );
