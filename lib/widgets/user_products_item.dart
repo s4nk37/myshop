@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../screens/edit_product_screen.dart';
+import 'package:provider/provider.dart';
+import '../providers/products.dart';
 
 class UserProductItem extends StatelessWidget {
   final String id;
@@ -25,7 +27,11 @@ class UserProductItem extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                IconButton(onPressed: () {}, icon: const Icon(Icons.delete)),
+                IconButton(
+                    onPressed: () {
+                      Provider.of<Products>(context).deleteProduct(id);
+                    },
+                    icon: const Icon(Icons.delete)),
                 IconButton(
                     onPressed: () {
                       Navigator.of(context).pushNamed(

@@ -26,7 +26,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
       imageUrl: '',
       isFavorite: false);
   var _isInit = true;
-  var _initValues = {
+  Map<String, String> _initValues = {
     'title': '',
     'description': '',
     'price': '',
@@ -42,20 +42,31 @@ class _EditProductScreenState extends State<EditProductScreen> {
   @override
   void didChangeDependencies() {
     if (_isInit) {
-      final productId = ModalRoute.of(context)!.settings.arguments as String;
+      // print(_isInit);
+      // print();
+      var productId = '';
+      if (ModalRoute.of(context)!.settings.arguments != null) {
+        productId = ModalRoute.of(context)!.settings.arguments.toString();
+      }
+      // final productId =
+      //     (ModalRoute.of(context)!.settings.arguments as String).toString();
+
       if (productId.isNotEmpty) {
         _editedProduct =
             Provider.of<Products>(context, listen: false).findbyId(productId);
+        print(_editedProduct);
         _initValues = {
           'title': _editedProduct.title,
           'description': _editedProduct.description,
           'price': _editedProduct.price.toString(),
           'imageUrl': '',
         };
-        _imageUrlController.text = _editedProduct.imageUrl;
+        _imageUrlController.text = _editedProduct.imageUrl.toString();
       }
     }
+    print(_isInit);
     _isInit = false;
+
     super.didChangeDependencies();
   }
 
@@ -120,7 +131,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
             children: [
               //TITLE
               TextFormField(
-                initialValue: _initValues['title'],
+                initialValue: _initValues['title'].toString(),
                 decoration: const InputDecoration(labelText: 'Title'),
                 textInputAction: TextInputAction.next,
                 onFieldSubmitted: (_) {
@@ -147,7 +158,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
 
               //PRICE
               TextFormField(
-                initialValue: _initValues['price'],
+                initialValue: _initValues['price'].toString(),
                 decoration: const InputDecoration(labelText: 'Price'),
                 textInputAction: TextInputAction.next,
                 keyboardType: TextInputType.number,
@@ -181,7 +192,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
 
               //DESCRIPTION
               TextFormField(
-                initialValue: _initValues['description'],
+                initialValue: _initValues['description'].toString(),
                 decoration: const InputDecoration(labelText: 'Description'),
                 maxLines: 3,
                 keyboardType: TextInputType.multiline,
