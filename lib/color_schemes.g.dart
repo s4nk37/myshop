@@ -11,8 +11,9 @@ ThemeData myTheme({required ColorScheme type}) {
     ),
     appBarTheme: AppBarTheme(
       titleTextStyle: TextStyle(
-        fontWeight: FontWeight.w700,
-        fontSize: 25,
+        fontWeight: FontWeight.w600,
+        fontSize: 23,
+        letterSpacing: 2,
         color: type == darkColorScheme
             ? const Color(0xffa5cc33)
             : const Color(0xFF093110),

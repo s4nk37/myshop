@@ -47,8 +47,9 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
                 Icons.more_vert,
                 color: Colors.white70,
               ),
-              color: Colors.green.withOpacity(0.9),
+              color: Theme.of(context).colorScheme.background.withOpacity(0.97),
               elevation: 0.0,
+              position: PopupMenuPosition.under,
               itemBuilder: (_) => const [
                 PopupMenuItem(
                   value: FilterOptions.Favorites,
