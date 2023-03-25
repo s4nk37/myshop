@@ -38,6 +38,34 @@ class CartItem extends StatelessWidget {
           size: 30,
         ),
       ),
+      confirmDismiss: (direction) {
+        return showDialog(
+            context: context,
+            builder: (ctx) {
+              return AlertDialog(
+                title: const Text("Are your sure?"),
+                content:
+                    const Text("Do you want to remove the item from cart?"),
+                actions: [
+                  ElevatedButton(
+                    onPressed: () => Navigator.of(context).pop(false),
+                    child: const Text("No"),
+                  ),
+                  ElevatedButton(
+                    onPressed: () => Navigator.of(context).pop(true),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateColor.resolveWith(
+                          (states) => Colors.transparent),
+                      elevation: null,
+                      shadowColor: MaterialStateColor.resolveWith(
+                          (states) => Colors.transparent),
+                    ),
+                    child: const Text("Yes"),
+                  )
+                ],
+              );
+            });
+      },
       child: Container(
         decoration: const BoxDecoration(
           border: Border(bottom: BorderSide(width: 0.1)),

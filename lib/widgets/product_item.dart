@@ -47,32 +47,35 @@ class ProductItem extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 trailing: IconButton(
-                    onPressed: () {
-                      cart.addItem(product.id, product.price, product.title);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            "${product.title} is added to cart.",
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.bodyLarge,
-                          ),
-                          backgroundColor:
-                              Theme.of(context).colorScheme.surfaceVariant,
-                          elevation: 0.0,
-                          duration: const Duration(milliseconds: 900),
-                          action: SnackBarAction(
-                            label: 'Undo',
-                            onPressed: () {},
-                            textColor: Colors.red,
-                          ),
+                  onPressed: () {
+                    cart.addItem(product.id, product.price, product.title);
+                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          "${product.title} is added to cart.",
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.bodyLarge,
                         ),
-                      );
-                    },
-                    splashColor: Colors.transparent,
-                    icon: const Icon(
-                      Icons.shopping_bag,
-                      color: Colors.white,
-                    )),
+                        backgroundColor:
+                            Theme.of(context).colorScheme.surfaceVariant,
+                        elevation: 0.0,
+                        duration: const Duration(seconds: 2),
+                        action: SnackBarAction(
+                          label: 'Undo',
+                          onPressed: () {
+                            cart.removeSingleItem(product.id);
+                          },
+                        ),
+                      ),
+                    );
+                  },
+                  splashColor: Colors.transparent,
+                  icon: const Icon(
+                    Icons.shopping_bag,
+                    color: Colors.white,
+                  ),
+                ),
               ),
             ),
           ),
