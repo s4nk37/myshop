@@ -6,6 +6,9 @@ ThemeData myTheme({required ColorScheme type}) {
     colorScheme: type,
     fontFamily: 'Poppins',
     iconTheme: const IconThemeData(color: Colors.pink),
+    snackBarTheme: const SnackBarThemeData(
+      actionTextColor: Colors.red,
+    ),
     appBarTheme: AppBarTheme(
       titleTextStyle: TextStyle(
         fontWeight: FontWeight.w700,
