@@ -67,12 +67,12 @@ class Products with ChangeNotifier {
     return (items.firstWhere((element) => element.id == id));
   }
 
-  void addProduct(Product product) {
+  Future<void> addProduct(Product product) {
     // const url = 'https://myshop-93710-default-rtdb.asia-southeast1.firebasedatabase.app/products.json';
     final url = Uri.https(
         'myshop-93710-default-rtdb.asia-southeast1.firebasedatabase.app',
-        '/products.json');
-    http
+        '/products/json.');
+    return http
         .post(url,
             body: json.encode({
               'title': product.title,
@@ -91,6 +91,10 @@ class Products with ChangeNotifier {
       _items.add(newProduct);
       notifyListeners();
     });
+    //     .catchError((error) {
+    //   print(error);
+    //   throw error;
+    // });
   }
 
   void updateProduct(String id, Product newProduct) {
