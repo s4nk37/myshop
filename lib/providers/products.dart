@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'product.dart';
 
 class Products with ChangeNotifier {
-  final List<Product> _items = [
+  List<Product> _items = [
     Product(
       id: 'p1',
       title: 'Red Shirt',
@@ -51,6 +51,32 @@ class Products with ChangeNotifier {
   //   notifyListeners();
   // }
 
+  Future<void> fetchAndSetProducts() async {
+    final url = Uri.https(
+        'myshop-93710-default-rtdb.asia-southeast1.firebasedatabase.app',
+        '/products.json');
+    try {
+      final response = await http.get(url);
+      print(jsonDecode(response.body));
+      final extractedData = jsonDecode(response.body) as Map<String, dynamic>;
+      final List<Product> loadedProducts = [];
+      extractedData.forEach((prodId, prodData) {
+        loadedProducts.add(Product(
+            id: prodId,
+            title: prodData['title'],
+            description: prodData['description'],
+            price: prodData['price'],
+            imageUrl: prodData['imageUrl']));
+      });
+      _items.addAll(loadedProducts);
+      // print(_items.last);
+      // print("A");
+      notifyListeners();
+    } catch (error) {
+      rethrow;
+    }
+  }
+
   List<Product> get items {
     // if (_showFavoritesOnly) {
     //   return (_items.where((prodItem) => prodItem.isFavorite).toList());
@@ -67,21 +93,20 @@ class Products with ChangeNotifier {
     return (items.firstWhere((element) => element.id == id));
   }
 
-  Future<void> addProduct(Product product) {
+  Future<void> addProduct(Product product) async {
     // const url = 'https://myshop-93710-default-rtdb.asia-southeast1.firebasedatabase.app/products.json';
-    final url = Uri.https(
-        'myshop-93710-default-rtdb.asia-southeast1.firebasedatabase.app',
-        '/products/json.');
-    return http
-        .post(url,
-            body: json.encode({
-              'title': product.title,
-              'description': product.description,
-              'price': product.price,
-              'imageUrl': product.imageUrl,
-              'isFavorite': product.isFavorite,
-            }))
-        .then((response) {
+    try {
+      final url = Uri.https(
+          'myshop-93710-default-rtdb.asia-southeast1.firebasedatabase.app',
+          '/products.json');
+      final response = await http.post(url,
+          body: json.encode({
+            'title': product.title,
+            'description': product.description,
+            'price': product.price,
+            'imageUrl': product.imageUrl,
+            'isFavorite': product.isFavorite,
+          }));
       final newProduct = Product(
           id: json.decode(response.body)['name'],
           title: product.title,
@@ -90,11 +115,10 @@ class Products with ChangeNotifier {
           imageUrl: product.imageUrl);
       _items.add(newProduct);
       notifyListeners();
-    });
-    //     .catchError((error) {
-    //   print(error);
-    //   throw error;
-    // });
+    } catch (error) {
+      print(error);
+      throw error;
+    }
   }
 
   void updateProduct(String id, Product newProduct) {
