@@ -43,8 +43,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
   @override
   void didChangeDependencies() {
     if (_isInit) {
-      // print(_isInit);
-      // print();
       var productId = '';
       if (ModalRoute.of(context)!.settings.arguments != null) {
         productId = ModalRoute.of(context)!.settings.arguments.toString();
@@ -83,11 +81,14 @@ class _EditProductScreenState extends State<EditProductScreen> {
 
   void _updateImageUrl() {
     if (!_imageUrlFocusNode.hasFocus) {
-      if ((!(_imageUrlController.text.startsWith('http')) &&
-              !(_imageUrlController.text.startsWith('https'))) ||
-          !(_imageUrlController.text.endsWith('.jpg')) &&
-              !(_imageUrlController.text.endsWith('.jpeg')) &&
-              !(_imageUrlController.text.endsWith('.png'))) {
+      // if ((!(_imageUrlController.text.startsWith('http')) &&
+      //         !(_imageUrlController.text.startsWith('https'))) ||
+      //     !(_imageUrlController.text.endsWith('.jpg')) &&
+      //         !(_imageUrlController.text.endsWith('.jpeg')) &&
+      //         !(_imageUrlController.text.endsWith('.png')))
+
+      if (!_imageUrlController.text.startsWith('http') &&
+          !_imageUrlController.text.startsWith('https')) {
         return;
       }
       setState(() {});
@@ -289,11 +290,12 @@ class _EditProductScreenState extends State<EditProductScreen> {
                                     !(value.startsWith('https'))) {
                                   return "Please enter a valid URL";
                                 }
-                                if (!(value.endsWith('.jpg')) &&
-                                    !(value.endsWith('.jpeg')) &&
-                                    !(value.endsWith('.png'))) {
-                                  return "Please enter a valid image URL";
-                                }
+                                // MOST OF IMAGE URL DOESN'T END WITH JPG PNG JPEG
+                                // if (!(value.endsWith('.jpg')) &&
+                                //     !(value.endsWith('.jpeg')) &&
+                                //     !(value.endsWith('.png'))) {
+                                //   return "Please enter a valid image URL";
+                                // }
                                 return null;
                               },
                               onFieldSubmitted: (_) => _saveForm(),
