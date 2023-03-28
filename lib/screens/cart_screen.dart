@@ -98,7 +98,7 @@ class _OrderButtonState extends State<OrderButton> {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: widget.cartData.totalAmount <= 0
+      onPressed: (widget.cartData.totalAmount <= 0) || _isLoading
           ? null
           : () async {
               setState(() {
@@ -122,9 +122,7 @@ class _OrderButtonState extends State<OrderButton> {
             MaterialStateProperty.all(Theme.of(context).colorScheme.surface),
       ),
       child: _isLoading
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
+          ? const CircularProgressIndicator()
           : const Text(
               "Place Order",
               style: TextStyle(fontSize: 15),
