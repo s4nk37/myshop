@@ -8,15 +8,15 @@ class Auth with ChangeNotifier {
   String? _userId;
 
   Future<void> signup(String email, String password) async {
-    final url = Uri.https('identitytoolkit.googleapis.com',
-        '/v1/accounts:signUp?key=AIzaSyC1NMTyUrPDNkqbM1KLSb-Hsp8FQNLR0Po');
-    final response = await http.post(url,
-        body: json.encode({
-          'email': email,
-          'password': password,
-          'returnSecureToken': true,
-        }));
-
-    print(json.decode(response.body));
+    final url = Uri.parse(
+        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyC1NMTyUrPDNkqbM1KLSb-Hsp8FQNLR0Po');
+    final response = await http.post(
+      url,
+      body: json.encode({
+        'email': email,
+        'password': password,
+        'returnSecureToken': true,
+      }),
+    );
   }
 }
