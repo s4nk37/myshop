@@ -39,6 +39,12 @@ class Products with ChangeNotifier {
     //       'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Cast-Iron-Pan.jpg/1024px-Cast-Iron-Pan.jpg',
     // ),
   ];
+  String? token;
+  void receiveToken(String auth, List<Product> items) {
+    token = auth;
+    _items = items;
+  }
+  // Products(this.token, this._items);
 
   // var _showFavoritesOnly = false;
   //
@@ -53,12 +59,17 @@ class Products with ChangeNotifier {
   // }
 
   Future<void> fetchAndSetProducts() async {
-    final url = Uri.https(
-        'myshop-93710-default-rtdb.asia-southeast1.firebasedatabase.app',
-        '/products.json');
+    // print(token);
+    // final url = Uri.https(
+    //     'myshop-93710-default-rtdb.asia-southeast1.firebasedatabase.app',
+    //     '/products.json?access_token=$token');
+    final url = Uri.parse(
+        'https://myshop-93710-default-rtdb.asia-southeast1.firebasedatabase.app/products.json?auth=$token');
     try {
       final response = await http.get(url);
+
       final extractedData = jsonDecode(response.body) as Map<String, dynamic>;
+      print(response.body);
       final List<Product> loadedProducts = [];
       extractedData.forEach((prodId, prodData) {
         loadedProducts.add(Product(

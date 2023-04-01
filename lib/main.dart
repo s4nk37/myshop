@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 
 import './screens/product_detail_screen.dart';
 import './screens/products_overview_screen.dart';
-import 'color_schemes.g.dart';
+import 'theme.dart';
 import './providers/products.dart';
 import './providers/cart.dart';
 
@@ -27,8 +27,11 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => Auth(),
         ),
-        ChangeNotifierProvider(
+        ChangeNotifierProxyProvider<Auth, Products>(
           create: (_) => Products(),
+          update: (ctx, auth, previousProducts) => previousProducts!
+            ..receiveToken(auth.token.toString(),
+                previousProducts == null ? [] : previousProducts.items),
         ),
         ChangeNotifierProvider(
           create: (_) => Cart(),
@@ -37,25 +40,31 @@ class MyApp extends StatelessWidget {
           create: (_) => Orders(),
         )
       ],
-      child: MaterialApp(
-        title: 'My Shop',
-        debugShowCheckedModeBanner: false,
-        theme: myTheme(type: lightColorScheme),
-        darkTheme: myTheme(type: darkColorScheme),
-        home: const AuthScreen(),
-        routes: {
-          // '/': (ctx) => const ProductsOverviewScreen(),
-          // '/': (ctx) => const ProductsOverviewScreen(),
-          ProductDetailScreen.routeName: (ctx) => const ProductDetailScreen(),
-          CartScreen.routeName: (ctx) => const CartScreen(),
-          OrdersScreen.routeName: (ctx) => const OrdersScreen(),
-          OrderConfirmationScreen.routeName: (ctx) =>
-              const OrderConfirmationScreen(),
-          UserProductsScreen.routeName: (ctx) => const UserProductsScreen(),
-          EditProductScreen.routeName: (ctx) => const EditProductScreen(),
-          AuthScreen.routeName: (ctx) => const AuthScreen(),
-        },
-      ),
+      child: Consumer<Auth>(
+          builder: (ctx, auth, _) => MaterialApp(
+                title: 'My Shop',
+                debugShowCheckedModeBanner: false,
+                theme: myTheme(type: lightColorScheme),
+                darkTheme: myTheme(type: darkColorScheme),
+                home: auth.isAuth
+                    ? const ProductsOverviewScreen()
+                    : const AuthScreen(),
+                routes: {
+                  // '/': (ctx) => const ProductsOverviewScreen(),
+                  // '/': (ctx) => const ProductsOverviewScreen(),
+                  ProductDetailScreen.routeName: (ctx) =>
+                      const ProductDetailScreen(),
+                  CartScreen.routeName: (ctx) => const CartScreen(),
+                  OrdersScreen.routeName: (ctx) => const OrdersScreen(),
+                  OrderConfirmationScreen.routeName: (ctx) =>
+                      const OrderConfirmationScreen(),
+                  UserProductsScreen.routeName: (ctx) =>
+                      const UserProductsScreen(),
+                  EditProductScreen.routeName: (ctx) =>
+                      const EditProductScreen(),
+                  AuthScreen.routeName: (ctx) => const AuthScreen(),
+                },
+              )),
     );
   }
 }
