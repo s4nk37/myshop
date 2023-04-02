@@ -55,6 +55,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
     // final productsContainer = Provider.of<Products>(context, listen: false);
     // print(productsContainer);
     return Scaffold(
+        drawerScrimColor: Colors.transparent,
         appBar: AppBar(
           title: const Text("My Shop"),
           centerTitle: true,

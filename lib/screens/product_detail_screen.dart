@@ -17,10 +17,11 @@ class ProductDetailScreen extends StatelessWidget {
     final text = Theme.of(context).textTheme;
 
     return Scaffold(
+      drawerScrimColor: Colors.transparent,
       appBar: AppBar(
         title: Text(loadedProducts.title),
       ),
-      body: Container(
+      body: SizedBox(
         height: size.height,
         width: double.infinity,
         child: SingleChildScrollView(
