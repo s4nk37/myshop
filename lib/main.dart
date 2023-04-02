@@ -46,6 +46,7 @@ class MyApp extends StatelessWidget {
                 debugShowCheckedModeBanner: false,
                 theme: myTheme(type: lightColorScheme),
                 darkTheme: myTheme(type: darkColorScheme),
+                themeMode: ThemeMode.light,
                 home: auth.isAuth
                     ? const ProductsOverviewScreen()
                     : const AuthScreen(),

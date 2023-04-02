@@ -46,7 +46,7 @@ class AuthScreen extends StatelessWidget {
                       child: Lottie.asset(
                         'assets/lottie/login.json',
                         frameRate: FrameRate(30),
-                        repeat: false,
+                        repeat: true,
                         reverse: true,
                       ),
                     ),
@@ -57,7 +57,7 @@ class AuthScreen extends StatelessWidget {
                       child: Container(
                         margin: const EdgeInsets.only(bottom: 20.0),
                         padding: const EdgeInsets.symmetric(
-                            vertical: 8.0, horizontal: 90.0),
+                            vertical: 8.0, horizontal: 80.0),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           color: Colors.lightGreen.withOpacity(0.5),
@@ -74,7 +74,7 @@ class AuthScreen extends StatelessWidget {
                       ),
                     ),
                     Flexible(
-                      flex: deviceSize.width > 600 ? 2 : 1,
+                      flex: deviceSize.width > 600 ? 4 : 3,
                       child: const AuthCard(),
                     ),
                   ],
@@ -186,12 +186,13 @@ class _AuthCardState extends State<AuthCard> {
       elevation: 3.0,
       color: Theme.of(context).colorScheme.surfaceVariant,
       child: Container(
-        height: _authMode == AuthMode.Signup ? 400 : 330,
-        constraints:
-            BoxConstraints(minHeight: _authMode == AuthMode.Signup ? 320 : 260),
+        // height: _authMode == AuthMode.Signup ? 400 : 500,
+        // constraints:
+        //     BoxConstraints(minHeight: _authMode == AuthMode.Signup ? 320 : 400),
         width: deviceSize.width * 0.80,
         // padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 40),
-        padding: const EdgeInsets.only(left: 40, right: 40, top: 30, bottom: 5),
+        padding:
+            const EdgeInsets.only(left: 40, right: 40, top: 30, bottom: 15),
         child: Form(
           key: _formKey,
           child: SingleChildScrollView(
