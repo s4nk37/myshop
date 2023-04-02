@@ -23,10 +23,19 @@ class Orders with ChangeNotifier {
     return [..._orders];
   }
 
+  String? token;
+  void receiveToken(String auth, List<OrderItem> items) {
+    token = auth;
+    _orders = items;
+  }
+
   Future<void> fetchAndSetOrder() async {
-    final url = Uri.https(
-        'myshop-93710-default-rtdb.asia-southeast1.firebasedatabase.app',
-        '/orders.json');
+    // final url = Uri.https(
+    //     'myshop-93710-default-rtdb.asia-southeast1.firebasedatabase.app',
+    //     '/orders.json');
+    final url = Uri.parse(
+        'https://myshop-93710-default-rtdb.asia-southeast1.firebasedatabase.app/orders.json?auth=$token');
+
     try {
       final response = await http.get(url);
       final List<OrderItem> loadedOrders = [];
@@ -58,9 +67,8 @@ class Orders with ChangeNotifier {
   }
 
   Future<void> addOrder(List<CartItem> cartProducts, double total) async {
-    final url = Uri.https(
-        'myshop-93710-default-rtdb.asia-southeast1.firebasedatabase.app',
-        '/orders.json');
+    final url = Uri.parse(
+        'https://myshop-93710-default-rtdb.asia-southeast1.firebasedatabase.app/orders.json?auth=$token');
     final timeStamp = DateTime.now();
     final response = await http.post(url,
         body: json.encode({
