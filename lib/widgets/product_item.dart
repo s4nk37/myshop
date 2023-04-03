@@ -34,7 +34,8 @@ class ProductItem extends StatelessWidget {
                 leading: Consumer<Product>(
                   builder: (ctx, product, _) => IconButton(
                       onPressed: () {
-                        product.toggleFavoriteStatus(authData.token!);
+                        product.toggleFavoriteStatus(
+                            authData.token!, authData.userId!);
                       },
                       splashColor: Colors.transparent,
                       icon: Icon(
