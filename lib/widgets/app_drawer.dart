@@ -58,6 +58,7 @@ class AppDrawer extends StatelessWidget {
                 tileColor: Colors.red.withOpacity(0.5),
                 onTap: () {
                   Navigator.of(context).pop();
+                  Navigator.of(context).pushReplacementNamed('/');
                   Provider.of<Auth>(context, listen: false).logout();
                 },
               ),
