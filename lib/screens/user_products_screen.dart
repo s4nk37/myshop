@@ -11,7 +11,7 @@ class UserProductsScreen extends StatelessWidget {
 
   Future<void> _refreshProducts(BuildContext context) async {
     await Provider.of<Products>(context, listen: false)
-        .fetchAndSetProducts()
+        .fetchAndSetProducts(true)
         .then((value) => null);
   }
 
@@ -19,7 +19,7 @@ class UserProductsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final products = Provider.of<Products>(context);
+    // final products = Provider.of<Products>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -33,20 +33,30 @@ class UserProductsScreen extends StatelessWidget {
         ],
       ),
       drawer: const AppDrawer(),
-      body: RefreshIndicator(
-        onRefresh: () async {
-          await _refreshProducts(context);
-        },
-        child: ListView.builder(
-            padding: const EdgeInsets.all(10),
-            itemCount: products.items.length,
-            itemBuilder: (ctx, i) {
-              return UserProductItem(
-                id: products.items[i].id,
-                title: products.items[i].title,
-                imageUrl: products.items[i].imageUrl,
-              );
-            }),
+      body: FutureBuilder(
+        future: _refreshProducts(context),
+        builder: (ctx, snapshot) =>
+            snapshot.connectionState == ConnectionState.waiting
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : RefreshIndicator(
+                    onRefresh: () async {
+                      await _refreshProducts(context);
+                    },
+                    child: Consumer<Products>(
+                      builder: (ctx, products, child) => ListView.builder(
+                          padding: const EdgeInsets.all(10),
+                          itemCount: products.items.length,
+                          itemBuilder: (ctx, i) {
+                            return UserProductItem(
+                              id: products.items[i].id,
+                              title: products.items[i].title,
+                              imageUrl: products.items[i].imageUrl,
+                            );
+                          }),
+                    ),
+                  ),
       ),
     );
   }
