@@ -33,11 +33,14 @@ class ProductDetailScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                     border: Border.all(color: Colors.black12, width: 5),
                     borderRadius: BorderRadius.circular(21)),
-                child: Image.network(
-                  loadedProducts.imageUrl,
-                  fit: BoxFit.contain,
-                  height: size.height * 0.4,
-                  width: size.width * 0.95,
+                child: Hero(
+                  tag: loadedProducts.id,
+                  child: Image.network(
+                    loadedProducts.imageUrl,
+                    fit: BoxFit.contain,
+                    height: size.height * 0.4,
+                    width: size.width * 0.95,
+                  ),
                 ),
               ),
               const SizedBox(
