@@ -60,10 +60,12 @@ class Auth with ChangeNotifier {
       final userData = json.encode({
         'token': _token,
         'userId': _userId,
-        'expiryData': _expiryDate!.toIso8601String()
+        'expiryDate': _expiryDate!.toIso8601String()
       });
       prefs.setString('userData', userData);
+      print(userData);
     } catch (e) {
+      print(e);
       rethrow;
     }
   }
@@ -83,11 +85,12 @@ class Auth with ChangeNotifier {
     }
     final extractedUserData =
         json.decode(prefs.getString('userData')!) as Map<String, dynamic>;
-    final expiryDate = DateTime.parse(extractedUserData['expiryDate']);
 
+    final expiryDate = DateTime.parse(extractedUserData['expiryDate']);
     if (expiryDate.isBefore(DateTime.now())) {
       return false;
     }
+
     _token = extractedUserData['token'];
     _userId = extractedUserData['userId'];
     _expiryDate = expiryDate;
