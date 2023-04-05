@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/products.dart';
@@ -18,66 +20,100 @@ class ProductDetailScreen extends StatelessWidget {
 
     return Scaffold(
       drawerScrimColor: Colors.transparent,
-      appBar: AppBar(
-        title: Text(loadedProducts.title),
-      ),
+      // appBar: AppBar(
+      //   title: Text(loadedProducts.title),
+      // ),
       body: SizedBox(
         height: size.height,
         width: double.infinity,
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black12, width: 5),
-                    borderRadius: BorderRadius.circular(21)),
-                child: Hero(
+        // padding: const EdgeInsets.all(10),
+        child: CustomScrollView(
+          // padding: const EdgeInsets.all(10),
+          slivers: [
+            SliverAppBar(
+              expandedHeight: 300,
+              pinned: true,
+              flexibleSpace: FlexibleSpaceBar(
+                title: Container(
+                  height: 40,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.surface.withAlpha(150),
+                    borderRadius: BorderRadius.circular(11),
+                  ),
+                  margin: const EdgeInsets.only(
+                      top: 60, left: 10, right: 10, bottom: 0.0),
+                  alignment: Alignment.center,
+                  child: Text(
+                    loadedProducts.title,
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ),
+                background: Hero(
                   tag: loadedProducts.id,
-                  child: Image.network(
-                    loadedProducts.imageUrl,
-                    fit: BoxFit.contain,
-                    height: size.height * 0.4,
-                    width: size.width * 0.95,
+                  child: Container(
+                    margin: const EdgeInsets.only(
+                        top: 60, left: 10, right: 10, bottom: 11),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black12, width: 5),
+                      borderRadius: BorderRadius.circular(21),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(21),
+                      child: Image.network(
+                        loadedProducts.imageUrl,
+                        fit: BoxFit.cover,
+                        height: size.height * 0.4,
+                        width: size.width * 0.95,
+                      ),
+                    ),
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 15,
+            ),
+            SliverList(
+              delegate: SliverChildListDelegate(
+                [
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Container(
+                      width: double.infinity,
+                      height: size.height * 0.05,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: color.tertiaryContainer),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Text(
+                            loadedProducts.title,
+                            style: text.bodyLarge,
+                          ),
+                          Text(
+                            '₹ ${loadedProducts.price}',
+                            style: text.bodyLarge,
+                          ),
+                        ],
+                      )),
+                  Container(
+                    decoration: BoxDecoration(
+                        color: Colors.lime.withOpacity(0.5),
+                        borderRadius: BorderRadius.circular(20)),
+                    margin: const EdgeInsets.only(top: 15),
+                    height: size.height * 0.08,
+                    child: Padding(
+                        padding: const EdgeInsets.all(15),
+                        child: Text(loadedProducts.description)),
+                  ),
+                  const SizedBox(
+                    height: 800,
+                  ),
+                ],
               ),
-              Container(
-                  width: double.infinity,
-                  height: size.height * 0.05,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: color.tertiaryContainer),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text(
-                        loadedProducts.title,
-                        style: text.bodyLarge,
-                      ),
-                      Text(
-                        '₹ ${loadedProducts.price}',
-                        style: text.bodyLarge,
-                      ),
-                    ],
-                  )),
-              Container(
-                decoration: BoxDecoration(
-                    color: Colors.lime.withOpacity(0.5),
-                    borderRadius: BorderRadius.circular(20)),
-                margin: const EdgeInsets.only(top: 15),
-                height: size.height * 0.08,
-                child: Padding(
-                    padding: const EdgeInsets.all(15),
-                    child: Text(loadedProducts.description)),
-              )
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

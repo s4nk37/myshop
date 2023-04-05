@@ -63,7 +63,6 @@ class Auth with ChangeNotifier {
         'expiryDate': _expiryDate!.toIso8601String()
       });
       prefs.setString('userData', userData);
-      print(userData);
     } catch (e) {
       print(e);
       rethrow;
