@@ -41,14 +41,14 @@ class ProductDetailScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(11),
                   ),
                   margin: const EdgeInsets.only(
-                      top: 60, left: 10, right: 10, bottom: 0.0),
+                      top: 70, left: 10, right: 10, bottom: 0.0),
                   alignment: Alignment.center,
                   clipBehavior: Clip.antiAlias,
                   child: BackdropFilter(
                     filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                     child: Text(
                       loadedProducts.title,
-                      style: const TextStyle(color: Colors.white, fontSize: 10),
+                      style: const TextStyle(color: Colors.white),
                     ),
                   ),
                 ),

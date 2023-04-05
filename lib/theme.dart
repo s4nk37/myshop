@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import '../helpers/custom_route.dart';
 
 ThemeData myTheme({required ColorScheme type}) {
   return ThemeData(
+    pageTransitionsTheme: PageTransitionsTheme(
+      builders: {
+        TargetPlatform.iOS: CustomPageTransitionBuilder(),
+        TargetPlatform.android: CustomPageTransitionBuilder(),
+      },
+    ),
     useMaterial3: true,
     colorScheme: type,
     fontFamily: 'Poppins',
