@@ -121,15 +121,15 @@ class _AuthCardState extends State<AuthCard>
       parent: _controller!,
       curve: Curves.linear,
     ));
-    _heightAnimation!.addListener(
-      () => setState(() {}),
-    );
+    // _heightAnimation!.addListener(
+    //   () => setState(() {}),
+    // );
   }
 
   @override
   void dispose() {
     super.dispose();
-    _controller!.dispose();
+    // _controller!.dispose();
   }
 
   void _showErrorDialog(String message) {
@@ -221,16 +221,21 @@ class _AuthCardState extends State<AuthCard>
       ),
       elevation: 3.0,
       color: Theme.of(context).colorScheme.surfaceVariant,
-      child: Container(
-        // height: _authMode == AuthMode.Signup ? 320 : 260,
-        height: _heightAnimation!.value.height,
-        // constraints:
-        //    BoxConstraints(minHeight: _authMode == AuthMode.Signup ? 320 : 290),
-        constraints: BoxConstraints(minHeight: _heightAnimation!.value.height),
-        width: deviceSize.width * 0.80,
-        // padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 40),
-        padding:
-            const EdgeInsets.only(left: 40, right: 40, top: 30, bottom: 15),
+      child: AnimatedBuilder(
+        animation: _heightAnimation!,
+        builder: (ctx, ch) => Container(
+          // height: _authMode == AuthMode.Signup ? 320 : 260,
+          height: _heightAnimation!.value.height,
+          // constraints:
+          //    BoxConstraints(minHeight: _authMode == AuthMode.Signup ? 320 : 290),
+          constraints:
+              BoxConstraints(minHeight: _heightAnimation!.value.height),
+          width: deviceSize.width * 0.80,
+          // padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 40),
+          padding:
+              const EdgeInsets.only(left: 40, right: 40, top: 30, bottom: 15),
+          child: ch,
+        ),
         child: Form(
           key: _formKey,
           child: SingleChildScrollView(
