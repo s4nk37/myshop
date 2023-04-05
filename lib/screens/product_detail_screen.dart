@@ -48,7 +48,7 @@ class ProductDetailScreen extends StatelessWidget {
                     filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                     child: Text(
                       loadedProducts.title,
-                      style: const TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.white, fontSize: 10),
                     ),
                   ),
                 ),
@@ -56,7 +56,7 @@ class ProductDetailScreen extends StatelessWidget {
                   tag: loadedProducts.id,
                   child: Container(
                     margin: const EdgeInsets.only(
-                        top: 60, left: 10, right: 10, bottom: 11),
+                        top: 110, left: 10, right: 10, bottom: 11),
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.black12, width: 5),
                       borderRadius: BorderRadius.circular(21),

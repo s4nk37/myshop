@@ -37,23 +37,26 @@ class _OrderItemState extends State<OrderItem> {
             ),
           ),
 
-          if (_showMore)
-            Container(
-              height: min(widget.order.products.length * 50.0, 180),
-              decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.surfaceVariant,
-                  borderRadius:
-                      const BorderRadius.vertical(bottom: Radius.circular(12))),
-              child: ListView.builder(
-                  itemCount: widget.order.products.length,
-                  itemBuilder: (ctx, i) {
-                    return ListTile(
-                      leading: Text(widget.order.products[i].title),
-                      title: Text('× ${widget.order.products[i].quantity}  '),
-                      trailing: Text('₹ ${widget.order.products[i].price}'),
-                    );
-                  }),
-            ),
+          // if (_showMore)
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeIn,
+            height:
+                _showMore ? min(widget.order.products.length * 50.0, 180) : 0,
+            decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surfaceVariant,
+                borderRadius:
+                    const BorderRadius.vertical(bottom: Radius.circular(12))),
+            child: ListView.builder(
+                itemCount: widget.order.products.length,
+                itemBuilder: (ctx, i) {
+                  return ListTile(
+                    leading: Text(widget.order.products[i].title),
+                    title: Text('× ${widget.order.products[i].quantity}  '),
+                    trailing: Text('₹ ${widget.order.products[i].price}'),
+                  );
+                }),
+          ),
           // : Container(),
         ],
       ),
