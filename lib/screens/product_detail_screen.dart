@@ -26,11 +26,10 @@ class ProductDetailScreen extends StatelessWidget {
       body: SizedBox(
         height: size.height,
         width: double.infinity,
-        // padding: const EdgeInsets.all(10),
         child: CustomScrollView(
-          // padding: const EdgeInsets.all(10),
           slivers: [
             SliverAppBar(
+              surfaceTintColor: Colors.transparent,
               expandedHeight: 300,
               pinned: true,
               flexibleSpace: FlexibleSpaceBar(
@@ -38,15 +37,19 @@ class ProductDetailScreen extends StatelessWidget {
                   height: 40,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.surface.withAlpha(150),
+                    color: Theme.of(context).colorScheme.surface.withAlpha(80),
                     borderRadius: BorderRadius.circular(11),
                   ),
                   margin: const EdgeInsets.only(
                       top: 60, left: 10, right: 10, bottom: 0.0),
                   alignment: Alignment.center,
-                  child: Text(
-                    loadedProducts.title,
-                    style: const TextStyle(color: Colors.white),
+                  clipBehavior: Clip.antiAlias,
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                    child: Text(
+                      loadedProducts.title,
+                      style: const TextStyle(color: Colors.white),
+                    ),
                   ),
                 ),
                 background: Hero(
@@ -71,46 +74,49 @@ class ProductDetailScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SliverList(
-              delegate: SliverChildListDelegate(
-                [
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Container(
-                      width: double.infinity,
-                      height: size.height * 0.05,
-                      alignment: Alignment.center,
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              sliver: SliverList(
+                delegate: SliverChildListDelegate(
+                  [
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Container(
+                        width: double.infinity,
+                        height: size.height * 0.05,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: color.tertiaryContainer),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              loadedProducts.title,
+                              style: text.bodyLarge,
+                            ),
+                            Text(
+                              '₹ ${loadedProducts.price}',
+                              style: text.bodyLarge,
+                            ),
+                          ],
+                        )),
+                    Container(
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: color.tertiaryContainer),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Text(
-                            loadedProducts.title,
-                            style: text.bodyLarge,
-                          ),
-                          Text(
-                            '₹ ${loadedProducts.price}',
-                            style: text.bodyLarge,
-                          ),
-                        ],
-                      )),
-                  Container(
-                    decoration: BoxDecoration(
-                        color: Colors.lime.withOpacity(0.5),
-                        borderRadius: BorderRadius.circular(20)),
-                    margin: const EdgeInsets.only(top: 15),
-                    height: size.height * 0.08,
-                    child: Padding(
-                        padding: const EdgeInsets.all(15),
-                        child: Text(loadedProducts.description)),
-                  ),
-                  const SizedBox(
-                    height: 800,
-                  ),
-                ],
+                          color: Colors.lime.withOpacity(0.5),
+                          borderRadius: BorderRadius.circular(20)),
+                      margin: const EdgeInsets.only(top: 15),
+                      height: size.height * 0.08,
+                      child: Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: Text(loadedProducts.description)),
+                    ),
+                    const SizedBox(
+                      height: 800,
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
