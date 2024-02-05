@@ -29,7 +29,8 @@ class Products with ChangeNotifier {
       final favoriteResponse = await http.get(url);
       final favoriteData =
           json.decode(favoriteResponse.body) as Map<String, dynamic>?;
-
+      print("GOT RESPONSE");
+      print(favoriteData);
       final List<Product> loadedProducts = [];
       extractedData.forEach((prodId, prodData) {
         loadedProducts.add(Product(

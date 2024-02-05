@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
                 debugShowCheckedModeBanner: false,
                 theme: myTheme(type: lightColorScheme),
                 darkTheme: myTheme(type: darkColorScheme),
-                themeMode: ThemeMode.light,
+                themeMode: ThemeMode.dark,
                 home: auth.isAuth
                     ? const ProductsOverviewScreen()
                     : FutureBuilder(
